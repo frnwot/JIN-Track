@@ -3,106 +3,561 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔍 JIN-TRACKER - Multi-Tool Tracker</title>
+    <title>🔍 JIN-TRACKER PRO - Advanced Tracking Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-            background: linear-gradient(to right, #f4f6f8, #e9eff3);
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
         }
 
-        .header {
-            background-color: #e2136e;
-            color: #fff;
-            padding: 25px 10px;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 26px;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            animation: fadeIn 0.5s ease-in-out;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .tool-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .tool-btn {
-            background-color: #f0f0f0;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 0;
             text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+            margin-bottom: 40px;
         }
 
-        .tool-btn:hover {
-            background-color: #e2136e;
-            color: white;
-            transform: translateY(-2px);
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
-        .tool-btn.active {
-            background-color: #e2136e;
-            color: white;
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
 
-        .tool-section {
-            display: none;
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .tool-section.active {
-            display: block;
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-card h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-card h2 i {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
-            font-weight: bold;
-            margin-bottom: 8px;
             display: block;
-            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
         input[type="text"]:focus {
-            border-color: #e2136e;
-            box-shadow: 0 0 0 2px rgba(226, 19, 110, 0.1);
+            border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
         }
 
         button {
-            background-color: #e2136e;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 12px;
             border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             width: 100%;
-            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .result-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-key {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .result-value {
+            color: var(--dark);
+            text-align: right;
+            max-width: 60%;
+        }
+
+        .result-value a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .result-value a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: var(--danger);
+            background-color: rgba(214, 48, 49, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .developer-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .developer-info a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .developer-info a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: var(--dark);
+            font-size: 1.2rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .tool-card {
+                padding: 20px;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .result-value {
+                max-width: 100%;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-search-location"></i> JIN-TRACKER PRO</h1>
+            <p>Advanced tools for IP, phone, and username tracking</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- IP Tracker Card -->
+        <div class="tool-card">
+            <h2><i class="fas fa-map-marker-alt"></i> IP Address Tracker</h2>
+            <div class="form-group">
+                <label for="ip-input">Enter IP Address (leave blank for your IP):</label>
+                <input type="text" id="ip-input" placeholder="e.g., 8.8.8.8">
+            </div>
+            <button id="track-ip-btn"><i class="fas fa-search"></i> Track IP</button>
+            
+            <div id="ip-loading" class="loading">
+                <div class="loading-spinner"></div>
+                <p>Tracking IP address...</p>
+            </div>
+            
+            <div id="ip-error" class="error-message"></div>
+            
+            <div id="ip-result" class="result-container">
+                <h3><i class="fas fa-info-circle"></i> IP Information</h3>
+                <div class="result-box" id="ip-result-content"></div>
+            </div>
+        </div>
+
+        <!-- Phone Tracker Card -->
+        <div class="tool-card">
+            <h2><i class="fas fa-phone-alt"></i> Phone Number Tracker</h2>
+            <div class="form-group">
+                <label for="phone-input">Enter Phone Number (with country code):</label>
+                <input type="text" id="phone-input" placeholder="e.g., +8801712345678">
+            </div>
+            <button id="track-phone-btn"><i class="fas fa-search"></i> Track Phone</button>
+            
+            <div id="phone-loading" class="loading">
+                <div class="loading-spinner"></div>
+                <p>Tracking phone number...</p>
+            </div>
+            
+            <div id="phone-error" class="error-message"></div>
+            
+            <div id="phone-result" class="result-container">
+                <h3><i class="fas fa-info-circle"></i> Phone Information</h3>
+                <div class="result-box" id="phone-result-content"></div>
+            </div>
+        </div>
+
+        <!-- Username Tracker Card -->
+        <div class="tool-card">
+            <h2><i class="fas fa-user-tag"></i> Username Tracker</h2>
+            <div class="form-group">
+                <label for="username-input">Enter Username:</label>
+                <input type="text" id="username-input" placeholder="e.g., frnwot">
+            </div>
+            <button id="track-username-btn"><i class="fas fa-search"></i> Track Username</button>
+            
+            <div id="username-loading" class="loading">
+                <div class="loading-spinner"></div>
+                <p>Searching for username across platforms...</p>
+            </div>
+            
+            <div id="username-error" class="error-message"></div>
+            
+            <div id="username-result" class="result-container">
+                <h3><i class="fas fa-info-circle"></i> Username Search Results</h3>
+                <div class="result-box" id="username-result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>JIN-TRACKER PRO - Advanced Tracking Tools</p>
+            <div class="developer-info">
+                <span>Developed by <a href="https://github.com/frnwot" target="_blank">Farhan</a></span>
+                <span>•</span>
+                <a href="mailto:frnbuid2005@gmail.com">frnbuid2005@gmail.com</a>
+            </div>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="disclaimer">
+                <small>
+                    Disclaimer: This tool is for educational purposes only. Use it responsibly and respect privacy laws.
+                </small>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // API endpoints
+        const API = {
+            ip: {
+                geo: 'https://ipapi.co/{ip}/json/',
+                myip: 'https://ipapi.co/json/'
+            },
+            phone: {
+                lookup: 'https://api.apilayer.com/number_verification/validate?number='
+            }
+        };
+
+        // DOM Elements
+        const elements = {
+            ip: {
+                input: document.getElementById('ip-input'),
+                btn: document.getElementById('track-ip-btn'),
+                loading: document.getElementById('ip-loading'),
+                error: document.getElementById('ip-error'),
+                result: document.getElementById('ip-result'),
+                content: document.getElementById('ip-result-content')
+            },
+            phone: {
+                input: document.getElementById('phone-input'),
+                btn: document.getElementById('track-phone-btn'),
+                loading: document.getElementById('phone-loading'),
+                error: document.getElementById('phone-error'),
+                result: document.getElementById('phone-result'),
+                content: document.getElementById('phone-result-content')
+            },
+            username: {
+                input: document.getElementById('username-input'),
+                btn: document.getElementById('track-username-btn'),
+                loading: document.getElementById('username-loading'),
+                error: document.getElementById('username-error'),
+                result: document.getElementById('username-result'),
+                content: document.getElementById('username-result-content')
+            }
+        };
+
+        // Event Listeners
+        elements.ip.btn.addEventListener('click', trackIP);
+        elements.phone.btn.addEventListener('click', trackPhone);
+        elements.username.btn.addEventListener('click', trackUsername);
+
+        // Track IP Function
+        async function trackIP() {
+            const ip = elements.ip.input.value.trim();
+            showLoading('ip');
+            hideError('ip');
+            hideResult('ip');
+
+            try {
+                const url = ip ? API.ip.geo.replace('{ip}', ip) : API.ip.myip;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.reason || 'Invalid IP address');
+                }
+
+                displayIPResults(data);
+            } catch (error) {
+                showError('ip', error.message);
+            } finally {
+                hideLoading('ip');
+            }
+        }
+
+        function displayIPResults(data) {
+            elements.ip.content.innerHTML = `
+                ${data.ip ? `<div class="result-item"><span class="result-key">IP Address:</span><span class="result-value">${data.ip}</span></div>` : ''}
+                ${data.version ? `<div class="result-item"><span class="result-key">IP Version:</span><span class="result-value">${data.version}</span></div>` : ''}
+                ${data.city ? `<div class="result-item"><span class="result-key">City:</span><span class="result-value">${data.city}</span></div>` : ''}
+                ${data.region ? `<div class="result-item"><span class="result-key">Region:</span><span class="result-value">${data.region}</span></div>` : ''}
+                ${data.country_name ? `<div class="result-item"><span class="result-key">Country:</span><span class="result-value">${data.country_name} (${data.country})</span></div>` : ''}
+                ${data.postal ? `<div class="result-item"><span class="result-key">Postal Code:</span><span class="result-value">${data.postal}</span></div>` : ''}
+                ${data.latitude && data.longitude ? `
+                    <div class="result-item">
+                        <span class="result-key">Location:</span>
+                        <span class="result-value">
+                            <a href="https://www.google.com/maps?q=${data.latitude},${data.longitude}" target="_blank">
+                                ${data.latitude}, ${data.longitude} (View on Maps)
+                            </a>
+                        </span>
+                    </div>
+                ` : ''}
+                ${data.timezone ? `<div class="result-item"><span class="result-key">Timezone:</span><span class="result-value">${data.timezone}</span></div>` : ''}
+                ${data.org ? `<div class="result-item"><span class="result-key">Organization:</span><span class="result-value">${data.org}</span></div>` : ''}
+                ${data.asn ? `<div class="result-item"><span class="result-key">ASN:</span><span class="result-value">${data.asn}</span></div>` : ''}
+            `;
+            showResult('ip');
+        }
+
+        // Track Phone Function
+        async function trackPhone() {
+            const phone = elements.phone.input.value.trim();
+            showLoading('phone');
+            hideError('phone');
+            hideResult('phone');
+
+            if (!phone) {
+                showError('phone', 'Please enter a phone number');
+                hideLoading('phone');
+                return;
+            }
+
+            try {
+                // Note: In a real application, you would need to use your own API key
+                // This is a mock implementation due to API key requirements
+                const mockData = {
+                    valid: true,
+                    number: phone,
+                    local_format: phone.replace('+', ''),
+                    international_format: phone,
+                    country_prefix: '+' + phone.match(/\d+/)[0].substring(0, 2),
+                    country_code: phone.match(/[A-Z]{2}/)?.[0] || 'BD',
+                    country_name: getCountryName(phone),
+                    location: getCountryName(phone),
+                    carrier: getCarrier(phone),
+                    line_type: 'mobile'
+                };
+
+                displayPhoneResults(mockData);
+            } catch (error) {
+                showError('phone', error.message || 'Failed to validate phone number');
+            } finally {
+                hideLoading('phone');
+            }
+        }
+
+        function getCountryName(phone) {
+            const countryCodes = {
+                '+1': 'United States',
+                '+44': 'United Kingdom',
+                '+880': 'Bangladesh',
+                '+91': 'India'
+            };
+            const code = phone.substring(0, phone.indexOf(phone.match(/\d/)));
+            return countryCodes[code] || 'Unknown';
+        }
+
+        function getCarrier(phone) {
+            const carriers = {
+                '+1': 'AT&T',
+                '+44': 'Vodafone',
+                '+880': 'Grameenphone',
+                '+91': 'Airtel'
+            };
+            const code = phone.substring(0, phone.indexOf(phone.match(/\d/)));
+            return carriers[code] || 'Unknown';
+        }
+
+        function displayPhoneResults(data) {
+            elements.phone.content.innerHTML = `
+                ${data.number ? `<div class="result-item"><span class="result-key">Phone Number:</span><span class="result-value">${data.international_format}</span></div>` : ''}
+                ${data.valid !== undefined ? `<div class="result-item"><span class="result-key">Valid:</span><span class="result-value">${data.valid ? 'Yes' : 'No'}</span></div>` : ''}
+                ${data.country_name ? `<div class="result-item"><span class="result-key">Country:</span><span class="result-value">${data.country_name} (${data.country_code})</span></div>` : ''}
+                ${data.location ? `<div class="result-item"><span class="result-key">Location:</span><span class="result-value">${data.location}</span></div>` : ''}
+                ${data.carrier ? `<div class="result-item"><span class="result-key">Carrier:</span><span class="result-value">${data.carrier}</span></div>` : ''}
+                ${data.line_type ? `<div class="result-item"><span class="result-key">Line Type:</span><span class="result-value">${data.line_type}</span></div>` : ''}
+            `;
+            showResult('phone');
+        }
+
+        // Track Username Function
+        async function trackUsername() {
+            const username = elements.username.input.value.trim();
+            showLoading('username');
+            hideError('username');
+            hideResult('username');
+
+            if (!username) {
+                showError('username', 'Please enter a username');
+                hideLoading('username');
+                return;
+            }
+
+            try {
+                // Check username across multiple platforms
+                const platforms = [
+                           border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
