@@ -22,7 +22,7 @@ A responsive web interface for tracking IP addresses, phone numbers, and usernam
 
 ## Live Demo
 
-[View Live Demo](https://frnwot.github.io/Bkash-info/)
+[View Live Demo](https://frnwot.github.io/JIN-Track/)
 
 ## Installation
 
