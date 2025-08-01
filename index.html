@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 JIN-TRACKER - Multi-Tool Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(to right, #f4f6f8, #e9eff3);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .header {
+            background-color: #e2136e;
+            color: #fff;
+            padding: 25px 10px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tool-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tool-btn {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tool-btn:hover {
+            background-color: #e2136e;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-btn.active {
+            background-color: #e2136e;
+            color: white;
+        }
+
+        .tool-section {
+            display: none;
+        }
+
+        .tool-section.active {
+            display: block;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #e2136e;
+            box-shadow: 0 0 0 2px rgba(226, 19, 110, 0.1);
+            outline: none;
+        }
+
+        button {
+            background-color: #e2136e;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c1105f;
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-title {
+            font-weight: bold;
+            color: #e2136e;
+        }
+
+        #loadingGif {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin: 40px 0;
+        }
+
+        .developer-credit {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .tool-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+                margin: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🔍 JIN-TRACKER - Multi-Tool Tracker</h1>
+    <p style="margin-top: 6px;">IP, Phone, Username Tracking Tool</p>
+</div>
+
+<div class="container">
+    <div class="tool-options">
+        <button class="tool-btn active" onclick="showTool('ip-tracker')">IP Tracker</button>
+        <button class="tool-btn" onclick="showTool('show-ip')">Show Your IP</button>
+        <button class="tool-btn" onclick="showTool('phone-tracker')">Phone Tracker</button>
+        <button class="tool-btn" onclick="showTool('username-tracker')">Username Tracker</button>
+    </div>
+
+    <!-- IP Tracker Section -->
+    <div id="ip-tracker" class="tool-section active">
+        <h2>IP Address Tracker</h2>
+        <label for="ip-input">Enter IP Address:</label>
+        <input type="text" id="ip-input" placeholder="e.g., 8.8.8.8">
+        <button onclick="trackIP()">Track IP</button>
+        
+        <div id="loadingGif-ip">
+            <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." width="50">
+            <p>Tracking IP address...</p>
+        </div>
+        
+        <div id="ip-result" class="result-box"></div>
+    </div>
+
+    <!-- Show IP Section -->
+    <div id="show-ip" class="tool-section">
+        <h2>Your IP Address</h2>
+        <button onclick="showMyIP()">Show My IP</button>
+        
+        <div id="loadingGif-myip">
+            <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." width="50">
+            <p>Detecting your IP...</p>
+        </div>
+        
+        <div id="myip-result" class="result-box"></div>
+    </div>
+
+    <!-- Phone Tracker Section -->
+    <div id="phone-tracker" class="tool-section">
+        <h2>Phone Number Tracker</h2>
+        <label for="phone-input">Enter Phone Number (with country code):</label>
+        <input type="text" id="phone-input" placeholder="e.g., +8801XXXXXXXXX">
+        <button onclick="trackPhone()">Track Phone</button>
+        
+        <div id="loadingGif-phone">
+            <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." width="50">
+            <p>Tracking phone number...</p>
+        </div>
+        
+        <div id="phone-result" class="result-box"></div>
+    </div>
+
+    <!-- Username Tracker Section -->
+    <div id="username-tracker" class="tool-section">
+        <h2>Username Tracker</h2>
+        <label for="username-input">Enter Username:</label>
+        <input type="text" id="username-input" placeholder="e.g., frnwot">
+        <button onclick="trackUsername()">Track Username</button>
+        
+        <div id="loadingGif-username">
+            <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." width="50">
+            <p>Searching username...</p>
+        </div>
+        
+        <div id="username-result" class="result-box"></div>
+    </div>
+</div>
+
+<div class="developer-credit">
+    Developed by Farhan (GitHub: <a href="https://github.com/frnwot" target="_blank">frnwot</a>)
+</div>
+
+<div class="footer">
+    &copy; 2023-2025 JIN-TRACKER. All Rights Reserved.
+</div>
+
+<script>
+    // Show selected tool section
+    function showTool(toolId) {
+        // Hide all sections
+        document.querySelectorAll('.tool-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Deactivate all buttons
+        document.querySelectorAll('.tool-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Show selected section
+        document.getElementById(toolId).classList.add('active');
+        
+        // Activate clicked button
+        event.target.classList.add('active');
+    }
+
+    // IP Tracker Function
+    function trackIP() {
+        const ip = document.getElementById('ip-input').value.trim();
+        if (!ip) {
+            alert('Please enter an IP address');
+            return;
+        }
+        
+        const loading = document.getElementById('loadingGif-ip');
+        const resultBox = document.getElementById('ip-result');
+        
+        loading.style.display = 'block';
+        resultBox.style.display = 'none';
+        
+        // Simulate API call (in a real app, you would call your backend)
+        setTimeout(() => {
+            loading.style.display = 'none';
+            
+            // Mock data - in a real app, you would use actual API response
+            const mockData = {
+                ip: ip,
+                type: "IPv4",
+                country: "United States",
+                country_code: "US",
+                city: "Mountain View",
+                continent: "North America",
+                continent_code: "NA",
+                region: "California",
+                region_code: "CA",
+                latitude: 37.4056,
+                longitude: -122.0775,
+                is_eu: false,
+                postal: "94043",
+                calling_code: "1",
+                capital: "Washington D.C.",
+                borders: "CA,MX",
+                connection: {
+                    asn: 15169,
+                    org: "Google LLC",
+                    isp: "Google Cloud",
+                    domain: "google.com"
+                },
+                timezone: {
+                    id: "America/Los_Angeles",
+                    abbr: "PDT",
+                    is_dst: true,
+                    offset: -25200,
+                    utc: "-07:00",
+                    current_time: new Date().toLocaleString()
+                }
+            };
+            
+            // Display results
+            resultBox.innerHTML = `
+                <h3>IP Information:</h3>
+                <div class="result-item"><span class="result-title">IP Address:</span> ${mockData.ip}</div>
+                <div class="result-item"><span class="result-title">Type:</span> ${mockData.type}</div>
+                <div class="result-item"><span class="result-title">Country:</span> ${mockData.country} (${mockData.country_code})</div>
+                <div class="result-item"><span class="result-title">City:</span> ${mockData.city}</div>
+                <div class="result-item"><span class="result-title">Region:</span> ${mockData.region} (${mockData.region_code})</div>
+                <div class="result-item"><span class="result-title">Continent:</span> ${mockData.continent} (${mockData.continent_code})</div>
+                <div class="result-item"><span class="result-title">Coordinates:</span> ${mockData.latitude}, ${mockData.longitude}</div>
+                <div class="result-item"><span class="result-title">Maps:</span> <a href="https://www.google.com/maps/@${mockData.latitude},${mockData.longitude},10z" target="_blank">View on Google Maps</a></div>
+                <div class="result-item"><span class="result-title">Postal Code:</span> ${mockData.postal}</div>
+                <div class="result-item"><span class="result-title">Calling Code:</span> +${mockData.calling_code}</div>
+                <div class="result-item"><span class="result-title">Capital:</span> ${mockData.capital}</div>
+                <div class="result-item"><span class="result-title">Borders:</span> ${mockData.borders}</div>
+                <h4>Connection Details:</h4>
+                <div class="result-item"><span class="result-title">ASN:</span> ${mockData.connection.asn}</div>
+                <div class="result-item"><span class="result-title">Organization:</span> ${mockData.connection.org}</div>
+                <div class="result-item"><span class="result-title">ISP:</span> ${mockData.connection.isp}</div>
+                <div class="result-item"><span class="result-title">Domain:</span> ${mockData.connection.domain}</div>
+                <h4>Timezone Details:</h4>
+                <div class="result-item"><span class="result-title">Timezone:</span> ${mockData.timezone.id}</div>
+                <div class="result-item"><span class="result-title">Abbreviation:</span> ${mockData.timezone.abbr}</div>
+                <div class="result-item"><span class="result-title">UTC Offset:</span> ${mockData.timezone.utc}</div>
+                <div class="result-item"><span class="result-title">Current Time:</span> ${mockData.timezone.current_time}</div>
+            `;
+            
+            resultBox.style.display = 'block';
+        }, 1500);
+    }
+
+    // Show My IP Function
+    function showMyIP() {
+        const loading = document.getElementById('loadingGif-myip');
+        const resultBox = document.getElementById('myip-result');
+        
+        loading.style.display = 'block';
+        resultBox.style.display = 'none';
+        
+        // In a real app, you would call an API like https://api.ipify.org?format=json
+        setTimeout(() => {
+            loading.style.display = 'none';
+            
+            // Mock response
+            const mockIP = "192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255);
+            
+            resultBox.innerHTML = `
+                <h3>Your IP Address:</h3>
+                <div class="result-item">${mockIP}</div>
+                <p>Note: This is a demo. In a real application, your actual public IP would be shown.</p>
+            `;
+            
+            resultBox.style.display = 'block';
+        }, 1000);
+    }
+
+    // Phone Tracker Function
+    function trackPhone() {
+        const phone = document.getElementById('phone-input').value.trim();
+        if (!phone) {
+            alert('Please enter a phone number with country code');
+            return;
+        }
+        
+        const loading = document.getElementById('loadingGif-phone');
+        const resultBox = document.getElementById('phone-result');
+        
+        loading.style.display = 'block';
+        resultBox.style.display = 'none';
+        
+        // Simulate API call
+        setTimeout(() => {
+            loading.style.display = 'none';
+            
+            // Mock data
+            const countries = {
+                "+1": "United States",
+                "+44": "United Kingdom",
+                "+880": "Bangladesh",
+                "+91": "India"
+            };
+            
+            const carriers = {
+                "+1": "AT&T",
+                "+44": "Vodafone",
+                "+880": "Grameenphone",
+                "+91": "Airtel"
+            };
+            
+            const countryCode = phone.substring(0, phone.indexOf(phone.match(/\d/)));
+            const country = countries[countryCode] || "Unknown";
+            const carrier = carriers[countryCode] || "Unknown";
+            
+            resultBox.innerHTML = `
+                <h3>Phone Information:</h3>
+                <div class="result-item"><span class="result-title">Phone Number:</span> ${phone}</div>
+                <div class="result-item"><span class="result-title">Country:</span> ${country}</div>
+                <div class="result-item"><span class="result-title">Country Code:</span> ${countryCode}</div>
+                <div class="result-item"><span class="result-title">Carrier:</span> ${carrier}</div>
+                <div class="result-item"><span class="result-title">Valid Number:</span> Yes</div>
+                <div class="result-title">Possible Number:</span> Yes</div>
+                <div class="result-item"><span class="result-title">International Format:</span> ${phone}</div>
+                <div class="result-item"><span class="result-title">Type:</span> Mobile</div>
+                <p>Note: This is a demo. In a real application, more detailed information would be shown.</p>
+            `;
+            
+            resultBox.style.display = 'block';
+        }, 1500);
+    }
+
+    // Username Tracker Function
+    function trackUsername() {
+        const username = document.getElementById('username-input').value.trim();
+        if (!username) {
+            alert('Please enter a username');
+            return;
+        }
+        
+        const loading = document.getElementById('loadingGif-username');
+        const resultBox = document.getElementById('username-result');
+        
+        loading.style.display = 'block';
+        resultBox.style.display = 'none';
+        
+        // Simulate API call
+        setTimeout(() => {
+            loading.style.display = 'none';
+            
+            // Mock data - list of platforms to check
+            const platforms = [
+                { name: "Facebook", url: `https://facebook.com/${username}`, found: Math.random() > 0.5 },
+                { name: "Twitter", url: `https://twitter.com/${username}`, found: Math.random() > 0.5 },
+                { name: "Instagram", url: `https://instagram.com/${username}`, found: Math.random() > 0.5 },
+                { name: "GitHub", url: `https://github.com/${username}`, found: Math.random() > 0.5 },
+                { name: "LinkedIn", url: `https://linkedin.com/in/${username}`, found: Math.random() > 0.5 },
+                { name: "YouTube", url: `https://youtube.com/${username}`, found: Math.random() > 0.5 },
+                { name: "TikTok", url: `https://tiktok.com/@${username}`, found: Math.random() > 0.5 }
+            ];
+            
+            let resultsHTML = '<h3>Username Search Results:</h3>';
+            
+            platforms.forEach(platform => {
+                resultsHTML += `
+                    <div class="result-item">
+                        <span class="result-title">${platform.name}:</span> 
+                        ${platform.found ? 
+                            `<a href="${platform.url}" target="_blank">Found (View Profile)</a>` : 
+                            'Not found'}
+                    </div>
+                `;
+            });
+            
+            resultBox.innerHTML = resultsHTML + `
+                <p>Note: This is a demo. In a real application, actual platform checks would be performed.</p>
+            `;
+            
+            resultBox.style.display = 'block';
+        }, 2000);
+    }
+</script>
+
+</body>
+  </html>
